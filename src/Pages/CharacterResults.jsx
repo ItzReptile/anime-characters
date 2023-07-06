@@ -11,7 +11,7 @@ export const CharacterResults = () => {
 
   async function fetchCharacters() {
     const { data } = await axios.get(`${API}${setSearch}`);
-    setCharacterId(data)
+    setCharacterId(data);
     console.log(data);
   }
 
