@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, URLSearchParams } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Nav } from "../Componets/Nav";
 import "../universal.css";
 export const LandingPage = () => {
@@ -28,8 +28,9 @@ export const LandingPage = () => {
               placeholder="Search Any Title:"
               onChange={(e) => resetSearch(e.target.value)}
               onKeyDown={(event) => OnKeyPress(event.key)}
-              value={setSearch} 
+              value={setSearch}
             />
+
             <button onClick={() => animeData()} disabled={!setSearch}>
               press
             </button>
