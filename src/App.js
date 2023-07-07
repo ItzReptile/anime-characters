@@ -10,7 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/characters/search/:setSearch" element={<CharacterResults />} />
-          <Route path="/characters/:setId" element={<CharacterInfo />} />
+          <Route path="/characters/:id" element={<CharacterInfo />} />
         </Routes>
       </Router>
     </>
