@@ -93,7 +93,9 @@ export const CharacterResults = ({ id }) => {
               <option value="NAME_Z-A">Name Z-A</option>
             </select>
           </div>
-          {characterId &&
+          {characterId.length === 0 ? (
+            <div>No results found.</div>
+          ) : (
             characterId.slice(0, displayCount).map((character) => (
               <div className="character-info-wrapper" key={character.mal_id}>
                 <figure className="character-img-wrapper">
@@ -109,7 +111,8 @@ export const CharacterResults = ({ id }) => {
                   <button>Learn More</button>
                 </Link>
               </div>
-            ))}
+            ))
+          )}
           <div>
             <button onClick={loadMoreCharacters}>load more</button>
           </div>
