@@ -8,15 +8,32 @@ export const CharacterResults = ({ id }) => {
   const API = `https://api.jikan.moe/v4/characters?q=`;
   const [characterId, setCharacterId] = useState([]);
   const { setSearch } = useParams();
-  async function fetchCharacters() {
-    const { data } = await axios.get(`${API}${setSearch}`);
+  const [searchTerm, setSearchTerm] = useState(setSearch);
+  const [reSearch, setreSearch] = useState(setSearch);
+  const [displayCount, setDisplayCount] = useState(16);
+
+  async function fetchCharacters(searchQuery) {
+    const { data } = await axios.get(`${API}${searchQuery}`);
     setCharacterId(data.data);
     console.log(data);
   }
 
   useEffect(() => {
-    fetchCharacters();
+    fetchCharacters(reSearch);
   }, []);
+
+  const reSearchCharacter = async () => {
+    await fetchCharacters(reSearch);
+    setSearchTerm(reSearch);
+    window.history.replaceState(null, "", `${reSearch}`);
+  };
+
+  function OnKeyPress(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      reSearchCharacter();
+    }
+  }
 
   function sortAnime(filter) {
     switch (filter) {
@@ -35,15 +52,34 @@ export const CharacterResults = ({ id }) => {
         break;
     }
   }
+
+  const loadMoreCharacters = () => {
+    setDisplayCount((prevCount) => prevCount + 16);
+  };
+
   return (
     <>
       <Nav />
       <div className="container">
         <div className="row">
           <div>
-            you searched for <span> {setSearch}</span>
+            you searched for <span> {searchTerm}</span>
           </div>
-          
+          <div>
+            <input
+              type="text"
+              placeholder="search character again"
+              value={reSearch}
+              onChange={(event) => setreSearch(event.target.value)}
+            />
+            <button
+              disabled={!reSearch}
+              onKeyDown={(event) => OnKeyPress(event)}
+              onClick={() => reSearchCharacter()}
+            >
+              search again
+            </button>
+          </div>
           <div>
             <select
               id="filter"
@@ -58,8 +94,8 @@ export const CharacterResults = ({ id }) => {
             </select>
           </div>
           {characterId &&
-            characterId.slice(0, 16).map((character) => (
-              <div className="character-info-wrapper">
+            characterId.slice(0, displayCount).map((character) => (
+              <div className="character-info-wrapper" key={character.mal_id}>
                 <figure className="character-img-wrapper">
                   <img
                     src={character.images.jpg.image_url}
@@ -74,6 +110,9 @@ export const CharacterResults = ({ id }) => {
                 </Link>
               </div>
             ))}
+          <div>
+            <button onClick={loadMoreCharacters}>load more</button>
+          </div>
         </div>
       </div>
     </>
