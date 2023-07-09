@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import "./CharacterResults.css";
 import { Nav } from "../Componets/Nav";
-import { FaSearch, FaArrowLeft } from "react-icons/fa";
+import {AiOutlineArrowLeft,AiOutlineSearch } from "react-icons/ai";
 export const CharacterResults = () => {
   const API = `https://api.jikan.moe/v4/characters?q=`;
   const [characterId, setCharacterId] = useState([]);
@@ -69,7 +69,7 @@ export const CharacterResults = () => {
         <div className="container">
           <div className="row">
             <Link to={"/"}>
-              <FaArrowLeft className="arrow-left" />
+              <AiOutlineArrowLeft className="arrow-left" />
             </Link>
 
             <div className="search-results-wrapper">
@@ -86,7 +86,7 @@ export const CharacterResults = () => {
                 disabled={!reSearch}
                 onClick={() => reSearchCharacter()}
               >
-                <FaSearch />
+                <AiOutlineSearch />
               </button>
             </div>
             <div className="search-functions-wrapper">

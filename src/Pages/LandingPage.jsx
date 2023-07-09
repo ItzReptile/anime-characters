@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Nav } from "../Componets/Nav";
 import "../universal.css";
 import "./LandingPage.css";
-import { FaSearch } from "react-icons/fa";
+import { AiOutlineSearch } from "react-icons/ai";
 export const LandingPage = () => {
   const [setSearch, resetSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,7 +52,7 @@ export const LandingPage = () => {
                   onClick={() => animeData()}
                   disabled={!setSearch}
                 >
-                  <FaSearch />
+                  <AiOutlineSearch />
                 </button>
               </div>
             </div>
