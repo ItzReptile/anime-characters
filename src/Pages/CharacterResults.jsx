@@ -129,10 +129,12 @@ export const CharacterResults = () => {
                         alt="img-not-found"
                       />
                     </figure>
-                    <h1 className="character-name">{character.name}</h1>
-                    <Link to={`/characters/${character.mal_id}`}>
-                      <button className="learn-more">Learn More</button>
-                    </Link>
+                    <div>
+                      <h1 className="character-name">{character.name}</h1>
+                      <Link to={`/characters/${character.mal_id}`}>
+                        <button className="learn-more">Learn More</button>
+                      </Link>
+                    </div>
                   </div>
                 ))
               )}

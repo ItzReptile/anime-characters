@@ -25,7 +25,7 @@ export const CharacterInfo = () => {
     async function getAnime() {
       const { data } = await axios.get(`${API}${id}/full`);
       const getData = data.data;
-      console.log(getData);
+
       setCharacter(getData);
     }
 

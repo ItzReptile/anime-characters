@@ -1,5 +1,5 @@
-import React, { useState, URLSearchParams } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Nav } from "../Componets/Nav";
 import "../universal.css";
 import "./LandingPage.css";
