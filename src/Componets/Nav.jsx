@@ -1,8 +1,15 @@
-import React from "react";
-import "../universal.css";
-import "./Nav.css";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaHamburger, FaWindowClose } from "react-icons/fa";
+import "./Nav.css";
+
 export const Nav = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  function toggleMenu() {
+    setMenuOpen((prevMenuOpen) => !prevMenuOpen);
+  }
+
   return (
     <section id="NAV">
       <div className="container">
@@ -14,7 +21,7 @@ export const Nav = () => {
             <div className="site-links-wrapper">
               <ul className="site-links">
                 <Link to={"/"}>
-                  <li className=" site-link">Home</li>
+                  <li className="site-link">Home</li>
                 </Link>
                 <li
                   onClick={() => alert("Ive Suffered Enough")}
@@ -22,12 +29,21 @@ export const Nav = () => {
                 >
                   Contact
                 </li>
-
                 <li
                   onClick={() => alert("Ive Suffered Enough")}
                   className="no site-link"
                 >
                   About
+                </li>
+              </ul>
+            </div>
+            <FaHamburger onClick={toggleMenu} className="hamburger" />
+            <div className={`menu-display ${menuOpen ? "menu--open" : ""}`}>
+              <ul className="menu-links">
+                <li className="menu-link">About</li>
+                <li className="menu-link">Contact</li>
+                <li className="menu-link red" onClick={toggleMenu}>
+                  Close
                 </li>
               </ul>
             </div>

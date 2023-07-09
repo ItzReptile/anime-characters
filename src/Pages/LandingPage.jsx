@@ -2,13 +2,18 @@ import React, { useState, URLSearchParams } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Nav } from "../Componets/Nav";
 import "../universal.css";
+import "./LandingPage.css";
+import { FaSearch } from "react-icons/fa";
 export const LandingPage = () => {
   const [setSearch, resetSearch] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   function animeData() {
-    navigate(`/characters/search/${setSearch}`);
-    console.log(setSearch);
+    setLoading(true);
+    setTimeout(() => {
+      navigate(`/characters/search/${setSearch}`);
+    }, 700);
   }
 
   function OnKeyPress(key) {
@@ -20,23 +25,40 @@ export const LandingPage = () => {
   return (
     <>
       <Nav />
-      <div className="container">
-        <div className="row">
-          <div className="searchbar-wrapper">
-            <input
-              type="textarea"
-              placeholder="Search Any Title:"
-              onChange={(e) => resetSearch(e.target.value)}
-              onKeyDown={(event) => OnKeyPress(event.key)}
-              value={setSearch}
-            />
-
-            <button onClick={() => animeData()} disabled={!setSearch}>
-              press
-            </button>
+      <section id="LANDING">
+        <div className="background-blur">
+          <div className="container">
+            <div className="row">
+              <div className="headers">
+                <h1 className="header-title">
+                  Welcome To AnimeCharacters,Where You Can Search You're Desired
+                  Character!
+                </h1>
+                <h4 className="subheader-title">
+                  Go Ahead And Search Any Anime Character
+                </h4>
+              </div>
+              <div className="searchbar-wrapper">
+                <input
+                  className="search-bar"
+                  type="textarea"
+                  placeholder="Search: Ex Luffy"
+                  onChange={(e) => resetSearch(e.target.value)}
+                  onKeyDown={(event) => OnKeyPress(event.key)}
+                  value={setSearch}
+                />
+                <button
+                  className="search-btn"
+                  onClick={() => animeData()}
+                  disabled={!setSearch}
+                >
+                  <FaSearch />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

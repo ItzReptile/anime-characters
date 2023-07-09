@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "../universal.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import "./CharacterResults.css";
 import { Nav } from "../Componets/Nav";
-
-export const CharacterResults = ({ id }) => {
+import { FaSearch, FaArrowLeft } from "react-icons/fa";
+export const CharacterResults = () => {
   const API = `https://api.jikan.moe/v4/characters?q=`;
   const [characterId, setCharacterId] = useState([]);
   const { setSearch } = useParams();
   const [searchTerm, setSearchTerm] = useState(setSearch);
   const [reSearch, setreSearch] = useState(setSearch);
   const [displayCount, setDisplayCount] = useState(16);
+  const [loading, setLoading] = useState(false);
 
   async function fetchCharacters(searchQuery) {
+    setLoading(true);
+
     const { data } = await axios.get(`${API}${searchQuery}`);
     setCharacterId(data.data);
-    console.log(data);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -23,14 +27,15 @@ export const CharacterResults = ({ id }) => {
   }, []);
 
   const reSearchCharacter = async () => {
+    setLoading(true);
     await fetchCharacters(reSearch);
     setSearchTerm(reSearch);
     window.history.replaceState(null, "", `${reSearch}`);
+    setLoading(false);
   };
 
-  function OnKeyPress(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
+  function OnKeyPress(key) {
+    if (key === "Enter" && reSearch) {
       reSearchCharacter();
     }
   }
@@ -60,64 +65,88 @@ export const CharacterResults = ({ id }) => {
   return (
     <>
       <Nav />
-      <div className="container">
-        <div className="row">
-          <div>
-            you searched for <span> {searchTerm}</span>
-          </div>
-          <div>
-            <input
-              type="text"
-              placeholder="search character again"
-              value={reSearch}
-              onChange={(event) => setreSearch(event.target.value)}
-            />
-            <button
-              disabled={!reSearch}
-              onKeyDown={(event) => OnKeyPress(event)}
-              onClick={() => reSearchCharacter()}
-            >
-              search again
-            </button>
-          </div>
-          <div>
-            <select
-              id="filter"
-              onChange={(e) => sortAnime(e.target.value)}
-              defaultValue={"select"}
-            >
-              <option disabled value="select">
-                Sort
-              </option>
-              <option value="NAME_A-Z">Name A-Z</option>
-              <option value="NAME_Z-A">Name Z-A</option>
-            </select>
-          </div>
-          {characterId.length === 0 ? (
-            <div>No results found.</div>
-          ) : (
-            characterId.slice(0, displayCount).map((character) => (
-              <div className="character-info-wrapper" key={character.mal_id}>
-                <figure className="character-img-wrapper">
-                  <img
-                    src={character.images.jpg.image_url}
-                    alt="img-not-found"
-                  />
-                </figure>
-                <div className="character-name-wrapper">
-                  <h1 className="character-name">{character.name}</h1>
-                </div>
-                <Link to={`/characters/${character.mal_id}`}>
-                  <button>Learn More</button>
-                </Link>
-              </div>
-            ))
-          )}
-          <div>
-            <button onClick={loadMoreCharacters}>load more</button>
+      <section id="RESULTS">
+        <div className="container">
+          <div className="row">
+            <Link to={"/"}>
+              <FaArrowLeft className="arrow-left" />
+            </Link>
+
+            <div className="search-results-wrapper">
+              <input
+                type="text"
+                className="search-barv2"
+                placeholder="search character again"
+                value={reSearch}
+                onChange={(event) => setreSearch(event.target.value)}
+                onKeyDown={(event) => OnKeyPress(event.key)}
+              />
+              <button
+                className="search-btnv2"
+                disabled={!reSearch}
+                onClick={() => reSearchCharacter()}
+              >
+                <FaSearch />
+              </button>
+            </div>
+            <div className="search-functions-wrapper">
+              <h1 className="search-results-text">
+                You searched for <span className="black">{searchTerm}</span>
+              </h1>
+              <select
+                className="selective"
+                id="filter"
+                onChange={(e) => sortAnime(e.target.value)}
+                defaultValue={"select"}
+              >
+                <option disabled value="select">
+                  Sort
+                </option>
+                <option value="NAME_A-Z">Name A-Z</option>
+                <option value="NAME_Z-A">Name Z-A</option>
+              </select>
+            </div>
+
+            <div className="character-displays">
+              {loading ? (
+                new Array(displayCount)
+                  .fill(0)
+                  .map((__, index) => (
+                    <div key={index} className="loading-state"></div>
+                  ))
+              ) : characterId.length === 0 ? (
+                <div className="no-results">No results found.</div>
+              ) : (
+                characterId.slice(0, displayCount).map((character) => (
+                  <div
+                    className="character-info-wrapper"
+                    key={character.mal_id}
+                  >
+                    <figure className="character-img-wrapper ">
+                      <img
+                        className="character-img"
+                        src={character.images.jpg.image_url}
+                        alt="img-not-found"
+                      />
+                    </figure>
+                    <h1 className="character-name">{character.name}</h1>
+                    <Link to={`/characters/${character.mal_id}`}>
+                      <button className="learn-more">Learn More</button>
+                    </Link>
+                  </div>
+                ))
+              )}
+            </div>
+            <div className="btn-wrapper">
+              {characterId.length > displayCount && (
+                <button className="load-more" onClick={loadMoreCharacters}>
+                  load more
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

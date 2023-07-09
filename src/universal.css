@@ -6,11 +6,14 @@
 }
 
 .container {
-  margin: 12px 15px;
+  padding: 20px 40px;
+  width: 100%;
 }
 
 .row {
-  padding: 15px 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 li {

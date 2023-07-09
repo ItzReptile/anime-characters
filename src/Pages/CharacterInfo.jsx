@@ -2,9 +2,10 @@ import React from "react";
 import { Nav } from "../Componets/Nav";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./CharacterResults.css";
+import "./CharacterInfo.css";
 import "../universal.css";
-import { useParams } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
 const API = `https://api.jikan.moe/v4/characters/`;
 
 export const CharacterInfo = () => {
@@ -35,28 +36,31 @@ export const CharacterInfo = () => {
     return (
       <>
         <Nav />
-        <div className="container">
-          <div className="row">
-            <div className="character-info-wrapper">
-              <figure className="character-img-wrapper">
-                <img
-                  src={character.images?.jpg?.image_url}
-                  alt="img-not-found"
-                />
-              </figure>
-              <div className="character-name-wrapper">
-                <h1 className="character-name">{character.name}</h1>
-                <h1 className="character-name">{character.name_kanji}</h1>
-                <div className="character-anime">
-                  {character.anime.slice(0, 1).map((anime, index) => (
-                    <div key={index}>{anime.anime.title}, </div>
-                  ))}
-                  <div>{character.about} </div>
+        <section id="INFO">
+          <div className="container">
+            <div className="row">
+              <Link to={`/characters/search/${character.name}`}>
+                <FaArrowLeft className="arrow-left" />
+              </Link>
+              <div className="character-info-wrapperv2">
+                <figure className="character-img-wrapperv2">
+                  <img
+                    className="character-img"
+                    src={character.images?.jpg?.image_url}
+                    alt="img-not-found"
+                  />
+                </figure>
+                <div className="character-name-wrapper">
+                  <h1 className="character-namev2">{character.name}</h1>
+                  <h1 className="character-name-kanji">
+                    {character.name_kanji}
+                  </h1>
+                  <h1 className="character-about">{character.about}</h1>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </>
     );
   }
