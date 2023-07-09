@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHamburger} from "react-icons/fa";
 import "./Nav.css";
+import { LandingPage } from "../Pages/LandingPage";
 
 export const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,7 +21,7 @@ export const Nav = () => {
             </div>
             <div className="site-links-wrapper">
               <ul className="site-links">
-                <Link to={"/"}>
+                <Link to={"/"} >
                   <li className="site-link">Home</li>
                 </Link>
                 <li
