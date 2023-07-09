@@ -3,6 +3,11 @@
   position: relative;
 }
 
+.small{
+    width: 24px;
+}
+
+
 #LANDING::before {
   content: "";
   position: absolute;

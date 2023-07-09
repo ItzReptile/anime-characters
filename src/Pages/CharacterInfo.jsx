@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./CharacterInfo.css";
 import "../universal.css";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { Link, useParams } from "react-router-dom";
 const API = `https://api.jikan.moe/v4/characters/`;
 
@@ -40,7 +40,7 @@ export const CharacterInfo = () => {
           <div className="container">
             <div className="row">
               <Link to={`/characters/search/${character.name}`}>
-                <AiOutlineArrowLeft className="arrow-left" />
+                <ArrowLeftIcon className="small arrow-left" />
               </Link>
               <div className="character-info-wrapperv2">
                 <figure className="character-img-wrapperv2">
