@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Nav } from "../Componets/Nav";
 import "../universal.css";
 import "./LandingPage.css";
-import { ArrowLeftIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 export const LandingPage = () => {
   const [setSearch, resetSearch] = useState("");
