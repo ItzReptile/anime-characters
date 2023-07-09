@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHamburger, FaWindowClose } from "react-icons/fa";
+import { FaHamburger} from "react-icons/fa";
 import "./Nav.css";
 
 export const Nav = () => {
